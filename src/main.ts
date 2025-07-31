@@ -4,12 +4,6 @@ import 'reflect-metadata';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  /*try {
-    await AppDataSource.initialize();
-  } catch (error) {
-    console.log(error);
-  }
-*/
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
     new ValidationPipe({

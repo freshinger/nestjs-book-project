@@ -22,19 +22,42 @@ export class BooksService {
     return plainToInstance(CreateBookResponseDto, book);
   }
 
-  findAll() {
-    return `This action returns all books`;
+  async findAll() {
+    return await this.repo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} book`;
+  async findOne(id: string): Promise<boolean | CreateBookResponseDto> {
+    const book = await this.repo.findOne({ where: { id } });
+    if (book === null) return false;
+    // eslint-disable-next-line
+    return plainToInstance(CreateBookResponseDto, book);
   }
 
-  update(id: number, updateBookDto: CreateBookRequestDto) {
-    return `This action updates a #${id} book`;
+  async update(
+    id: string,
+    updateBookDto: CreateBookRequestDto,
+  ): Promise<boolean | CreateBookResponseDto> {
+    try {
+      const book = await this.repo.findOne({ where: { id } });
+      if (book === null) return false;
+      await this.repo.update({ id }, { ...updateBookDto, id });
+    } catch (error) {
+      console.log(error);
+    }
+    const updated = await this.repo.findOne({ where: { id } });
+    // eslint-disable-next-line
+    return plainToInstance(CreateBookResponseDto, updated);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} book`;
+  async remove(id: string): Promise<boolean> {
+    try {
+      const book = await this.repo.findOne({ where: { id } });
+      if (book === null) return false;
+      const deleted = await this.repo.delete({ id });
+      if (deleted && deleted.affected && deleted.affected > 0) return true;
+    } catch (error) {
+      console.log(error);
+    }
+    return true;
   }
 }

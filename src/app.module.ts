@@ -22,7 +22,8 @@ import { Book } from 'books/entities/book.entity';
 
       logging: false, // Set to 'all' or true to see SQL queries in the console (useful for debugging)
     }),
-    BooksModule],
+    BooksModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
