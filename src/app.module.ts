@@ -13,9 +13,9 @@ dotenv.config();
     TypeOrmModule.forRoot({
       type: 'postgres', // <--- Specify your database type here
       url: process.env.DATABASE_URL, // <--- Path to your DB file (for SQLite) or database name
-      ssl: {
-        rejectUnauthorized: false,
-      },
+      // ssl: {
+      //   rejectUnauthorized: false,
+      // },
       entities: [Book], // <--- **IMPORTANT:** This array will hold your Entity classes (e.g., [User, Product])
       //     You can also use a glob pattern like ['dist/**/*.entity{.ts,.js}']
       //     but explicitly listing them is often clearer for smaller projects.
